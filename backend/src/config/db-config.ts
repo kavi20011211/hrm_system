@@ -8,6 +8,8 @@ if (!process.env.DATABASE_URL || !process.env.DATABASE_API) {
 }
 
 export const database = createClient(
-  process.env.DATABASE_URL,
-  process.env.DATABASE_API
+
+  process.env.DATABASE_URL as string,
+  process.env.DATABASE_API as string
+
 );
