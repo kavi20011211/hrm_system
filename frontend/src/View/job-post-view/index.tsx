@@ -33,7 +33,7 @@ const JobPost = () => {
   return (
     <div className="w-4/5 h-4/5 bg-white rounded-2xl shadow-lg absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
       <div className="w-full p-5 flex justify-between">
-        <h4 className="text-2xl font-bold">Post a Job</h4>
+        <h4 className="text-2xl font-bold">Post a job</h4>
       </div>
       <div className="w-full justify-center items-center p-5">
         <Form {...form}>
