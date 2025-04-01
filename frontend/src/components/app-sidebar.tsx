@@ -10,7 +10,14 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { ChevronUp, LayoutDashboardIcon, User2 } from "lucide-react"; // Icons
+import {
+  ChevronUp,
+  LayoutDashboardIcon,
+  User2,
+  NotebookPenIcon,
+  Users2,
+  NetworkIcon,
+} from "lucide-react"; // Icons
 import routes from "@/config/routes";
 import {
   DropdownMenu,
@@ -22,6 +29,10 @@ import {
 // Function to map route paths to icons
 const routeIcons: Record<string, any> = {
   "/": LayoutDashboardIcon,
+  "/register": Users2,
+  "/job-post": NotebookPenIcon,
+  "/admin-user": User2,
+  "/job-request": NetworkIcon,
 };
 
 export function AppSidebar() {
@@ -65,10 +76,16 @@ export function AppSidebar() {
               >
                 <DropdownMenuItem>
                   {routes.secondNav.map((route) => {
+                    const Icon = routeIcons[route.path] || LayoutDashboardIcon;
                     return (
-                      <Link to={route.path}>
-                        <span>{route.name}</span>
-                      </Link>
+                      <SidebarMenuItem key={route.path}>
+                        <SidebarMenuButton asChild>
+                          <Link to={route.path}>
+                            <Icon />
+                            <span>{route.name}</span>
+                          </Link>
+                        </SidebarMenuButton>
+                      </SidebarMenuItem>
                     );
                   })}
                 </DropdownMenuItem>
