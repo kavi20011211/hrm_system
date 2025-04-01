@@ -1,3 +1,4 @@
+
 require("dotenv").config();
 import express from "express";
 import cors from "cors";
@@ -17,3 +18,4 @@ app.get("/protected", authenticateToken, (req: any, res: any) => {
 });
 
 app.listen(5000, () => console.log("Server running on port 5000"));
+
