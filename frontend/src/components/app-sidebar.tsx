@@ -10,7 +10,14 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { ChevronUp, LayoutDashboardIcon, User2 } from "lucide-react"; // Icons
+import {
+  ChevronUp,
+  LayoutDashboardIcon,
+  User2,
+  NotebookPenIcon,
+  Users2,
+  NetworkIcon,
+} from "lucide-react"; // Icons
 import routes from "@/config/routes";
 import {
   DropdownMenu,
@@ -22,16 +29,22 @@ import {
 // Function to map route paths to icons
 const routeIcons: Record<string, any> = {
   "/": LayoutDashboardIcon,
+  "/register": Users2,
+  "/job-post": NotebookPenIcon,
+  "/admin-user": User2,
+  "/job-request": NetworkIcon,
 };
 
 export function AppSidebar() {
   return (
-    <Sidebar>
-      <SidebarContent>
+    <Sidebar className="h-screen flex flex-col bg-white">
+      <SidebarContent className="flex-1 overflow-y-auto">
         <SidebarGroup>
-          <SidebarGroupLabel>Job.LK</SidebarGroupLabel>
+          <SidebarGroupLabel className="text-lg font-bold font-mono mb-4">
+            JobRooster.lk
+          </SidebarGroupLabel>
           <SidebarGroupContent>
-            <SidebarMenu>
+            <SidebarMenu className="space-y-2">
               {routes.mainNav.map((route) => {
                 const Icon = routeIcons[route.path] || LayoutDashboardIcon; // Default icon if not found
                 return (
@@ -65,10 +78,16 @@ export function AppSidebar() {
               >
                 <DropdownMenuItem>
                   {routes.secondNav.map((route) => {
+                    const Icon = routeIcons[route.path] || LayoutDashboardIcon;
                     return (
-                      <Link to={route.path}>
-                        <span>{route.name}</span>
-                      </Link>
+                      <SidebarMenuItem key={route.path}>
+                        <SidebarMenuButton asChild>
+                          <Link to={route.path}>
+                            <Icon />
+                            <span>{route.name}</span>
+                          </Link>
+                        </SidebarMenuButton>
+                      </SidebarMenuItem>
                     );
                   })}
                 </DropdownMenuItem>
