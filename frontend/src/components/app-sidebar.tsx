@@ -37,12 +37,14 @@ const routeIcons: Record<string, any> = {
 
 export function AppSidebar() {
   return (
-    <Sidebar>
-      <SidebarContent>
+    <Sidebar className="h-screen flex flex-col bg-white">
+      <SidebarContent className="flex-1 overflow-y-auto">
         <SidebarGroup>
-          <SidebarGroupLabel>Job.LK</SidebarGroupLabel>
+          <SidebarGroupLabel className="text-lg font-bold font-mono mb-4">
+            JobRooster.lk
+          </SidebarGroupLabel>
           <SidebarGroupContent>
-            <SidebarMenu>
+            <SidebarMenu className="space-y-2">
               {routes.mainNav.map((route) => {
                 const Icon = routeIcons[route.path] || LayoutDashboardIcon; // Default icon if not found
                 return (
