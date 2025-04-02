@@ -1,6 +1,7 @@
 import { database } from "../config/db-config";
 import { loginRequest, signUpRequest } from "../types";
 import jwt from "jsonwebtoken";
+const bcrypt = require("bcrypt");
 
 const JWT_SECRET: string = process.env.JWT_SECRET || "";
 
@@ -10,7 +11,7 @@ export const signUp = async (req: any, res: any) => {
   if (!email || !password || !name) {
     return res.status(400).json({ error: "All fields are required" });
   }
-  const bcrypt = require("bcrypt");
+
   const hashedPassword = await bcrypt.hash(password, 10);
 
   const response = await database
