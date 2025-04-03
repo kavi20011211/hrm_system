@@ -17,4 +17,4 @@ app.get("/protected", authenticateToken, (req: any, res: any) => {
   res.json({ message: "You have accessed a protected route!", user: req.user });
 });
 
-app.listen(5000, () => console.log("Server running on port 5000"));
+app.listen(5000, () => console.log("Server running on port 50001"));
