@@ -1,15 +1,8 @@
-import { Grid, Title, Text, Button, Paper, RingProgress } from "@mantine/core";
-import { IconBriefcase } from "@tabler/icons-react";
-import React, { Component } from "react";
-
+import { Grid } from "@mantine/core";
 import dynamic from "next/dynamic";
-import TopBar from "./topbar";
-import StatCard from "./statcards";
-import ReviewsCard from "./reviewscard";
-import StatsRing from "./statsring";
 const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
-const Dashboard = () => {
+const StatsGraph = () => {
   const chartData = {
     options: {
       chart: {
@@ -45,27 +38,26 @@ const Dashboard = () => {
       },
     },
   };
-
   return (
-    <Grid>
-      <div className="w-15/16 h-7/8 bg-white rounded-2xl shadow-lg absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-        <TopBar />
-
-        <Grid style={{ justifyContent: "center" }}>
-          <Grid.Col span={6}>
-            <StatCard />
-          </Grid.Col>
-          <Grid.Col span={5}>
-            <ReviewsCard />
-          </Grid.Col>
-        </Grid>
-
-        <Grid.Col span={3}>
-          <StatsRing />
-        </Grid.Col>
-      </div>
-    </Grid>
+    <Grid.Col
+      span={8}
+      style={{
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "end",
+        flexWrap: "wrap",
+        justifyContent: "space-evenly",
+        padding: 20,
+      }}
+    >
+      <Chart
+        options={chartData.options}
+        series={chartData.series}
+        type="area"
+        height={400}
+        width={1200}
+      />
+    </Grid.Col>
   );
 };
-
-export default Dashboard;
+export default StatsGraph;
