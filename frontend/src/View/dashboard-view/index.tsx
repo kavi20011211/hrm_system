@@ -5,10 +5,11 @@ import StatsRing from "./statsring";
 import StatsGraph from "./statsgraph";
 import { Grid } from "@mantine/core";
 import About from "./about";
+import JobPost from "../job-post-view";
 
 const Dashboard = () => {
   const [topBarSelection, setTopBarSelection] = useState<string>("home");
-  console.log("Top bar selection:", topBarSelection);
+
   return (
     <div className="w-15/16 h-7/8 bg-white rounded-2xl shadow-lg absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
       <TopBar setTopBarSelection={setTopBarSelection} />
@@ -27,6 +28,7 @@ const Dashboard = () => {
       )}
 
       {topBarSelection === "about" && <About />}
+      {topBarSelection === "postjob" && <JobPost />}
     </div>
   );
 };
