@@ -1,9 +1,18 @@
-import { Grid, Title, Text, Button, Paper, RingProgress } from "@mantine/core";
-import { IconBriefcase } from "@tabler/icons-react";
-import React, { Component } from "react";
+import { Grid } from "@mantine/core";
 
-import dynamic from "next/dynamic";
-const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
+import StatCard from "./statcards";
+import ReviewsCard from "./reviewscard";
 
-const Home = () => {};
+const Home = () => {
+  return (
+    <Grid p={20}>
+      <Grid.Col span={6}>
+        <StatCard />
+      </Grid.Col>
+      <Grid.Col span={6}>
+        <ReviewsCard />
+      </Grid.Col>
+    </Grid>
+  );
+};
 export default Home;

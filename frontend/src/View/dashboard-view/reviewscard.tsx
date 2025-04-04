@@ -28,20 +28,6 @@ const ReviewsCard = () => {
           recommended for anyone job hunting in Sri Lanka." — Dilshan P.,
           Colombo
         </Text>
-        <Text style={{ marginTop: 20 }}>
-          "Landed My Dream Job in Just a Week!" "I was struggling to find a job
-          until I came across JobRooster.lk. The platform is super easy to use,
-          and within a week, I landed an interview for my dream job! Highly
-          recommended for anyone job hunting in Sri Lanka." — Dilshan P.,
-          Colombo
-        </Text>
-        <Text style={{ marginTop: 20 }}>
-          "Landed My Dream Job in Just a Week!" "I was struggling to find a job
-          until I came across JobRooster.lk. The platform is super easy to use,
-          and within a week, I landed an interview for my dream job! Highly
-          recommended for anyone job hunting in Sri Lanka." — Dilshan P.,
-          Colombo
-        </Text>
       </Paper>
     </Grid.Col>
   );

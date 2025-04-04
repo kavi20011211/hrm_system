@@ -2,20 +2,10 @@ import { Grid, Text, RingProgress } from "@mantine/core";
 
 const StatsRing = () => {
   return (
-    <Grid.Col
-      span={3}
-      style={{
-        display: "flex",
-        flexDirection: "row",
-        alignItems: "end",
-        flexWrap: "wrap",
-        justifyContent: "space-evenly",
-        padding: 20,
-      }}
-    >
+    <Grid>
       <RingProgress
         size={400}
-        thickness={26}
+        thickness={20}
         label={
           <Text size="xs" ta="center" px="xs" style={{ pointerEvents: "none" }}>
             Hover sections to see tooltips
@@ -27,7 +17,7 @@ const StatsRing = () => {
           { value: 15, color: "grape", tooltip: "Other – 15 Gb" },
         ]}
       />
-    </Grid.Col>
+    </Grid>
   );
 };
 export default StatsRing;

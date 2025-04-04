@@ -39,25 +39,15 @@ const StatsGraph = () => {
     },
   };
   return (
-    <Grid.Col
-      span={8}
-      style={{
-        display: "flex",
-        flexDirection: "row",
-        alignItems: "end",
-        flexWrap: "wrap",
-        justifyContent: "space-evenly",
-        padding: 20,
-      }}
-    >
+    <Grid>
       <Chart
         options={chartData.options}
         series={chartData.series}
         type="area"
         height={400}
-        width={1200}
+        width={800}
       />
-    </Grid.Col>
+    </Grid>
   );
 };
 export default StatsGraph;

@@ -1,10 +1,16 @@
 import { Grid, Title, Text, Button } from "@mantine/core";
 import { IconBriefcase } from "@tabler/icons-react";
-import React, { Component } from "react";
 
-const TopBar = () => {
+interface Props {
+  setTopBarSelection: (type: string) => void;
+}
+
+const TopBar: React.FC<Props> = ({ setTopBarSelection }) => {
+  const handleTopBarSelection = (selection: string) => {
+    setTopBarSelection(selection);
+  };
   return (
-    <div>
+    <Grid>
       <Grid.Col
         style={{
           display: "flex",
@@ -36,6 +42,7 @@ const TopBar = () => {
                 color: "#67C6E3",
                 border: "1px solid #67C6E3",
               }}
+              onClick={() => handleTopBarSelection("home")}
             >
               Home
             </Button>
@@ -47,6 +54,19 @@ const TopBar = () => {
                 color: "#67C6E3",
                 border: "1px solid #67C6E3",
               }}
+              onClick={() => handleTopBarSelection("stats")}
+            >
+              Stats
+            </Button>
+          </div>
+          <div>
+            <Button
+              style={{
+                backgroundColor: "transparent",
+                color: "#67C6E3",
+                border: "1px solid #67C6E3",
+              }}
+              onClick={() => handleTopBarSelection("about")}
             >
               About
             </Button>
@@ -57,6 +77,7 @@ const TopBar = () => {
               style={{
                 backgroundColor: "#67C6E3",
               }}
+              onClick={() => handleTopBarSelection("findjob")}
             >
               Find A Job
             </Button>
@@ -66,6 +87,7 @@ const TopBar = () => {
               style={{
                 backgroundColor: "#67C6E3",
               }}
+              onClick={() => handleTopBarSelection("postjob")}
             >
               Post A Job
             </Button>
@@ -77,6 +99,7 @@ const TopBar = () => {
                 color: "#AF1740",
                 border: "1px solid #AF1740",
               }}
+              onClick={() => handleTopBarSelection("signout")}
             >
               Sign Out
             </Button>
@@ -94,7 +117,7 @@ const TopBar = () => {
           }}
         ></div>
       </Grid.Col>
-    </div>
+    </Grid>
   );
 };
 export default TopBar;
