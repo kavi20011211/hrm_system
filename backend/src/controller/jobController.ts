@@ -1,4 +1,3 @@
-import { error } from "console";
 import { database } from "../config/db-config";
 import { authenticateToken } from "../middlewares/auth";
 
@@ -33,6 +32,7 @@ export const jobPostAllRead = [
   },
 ];
 
+// Job Single Read
 export const jobPostSingleRead = [
   authenticateToken,
   async (req: any, res: any) => {
@@ -56,6 +56,51 @@ export const jobPostSingleRead = [
       }
 
       res.json({ message: "Success", data: response.data });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: "Internal Server Error", data: null });
+    }
+  },
+];
+
+// Job Update
+export const jobPostUpdate = [
+  authenticateToken,
+  async (req: any, res: any) => {
+    const { id, title, description } = req.body;
+
+    try {
+      const response = await database
+        .from("jobs")
+        .update({ title, description })
+        .eq("id", id);
+
+      if (response.error) {
+        return res.status(400).json({ message: "Bad Request", data: null });
+      }
+
+      res.json({ message: response.statusText });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: "Internal Server Error", data: null });
+    }
+  },
+];
+
+// Job Delete
+export const jobPostDelete = [
+  authenticateToken,
+  async (req: any, res: any) => {
+    const { id } = req.body;
+
+    try {
+      const response = await database.from("jobs").delete().eq("id", id);
+
+      if (response.error) {
+        return res.status(400).json({ message: "Bad Request", data: null });
+      }
+
+      res.json({ message: response.statusText });
     } catch (error) {
       console.error(error);
       res.status(500).json({ message: "Internal Server Error", data: null });
