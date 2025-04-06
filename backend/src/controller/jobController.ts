@@ -1,12 +1,13 @@
 import { database } from "../config/db-config";
 import { authenticateToken } from "../middlewares/auth";
+import { jobRequest } from "../types";
 
 // Job Create
 export const jobPostCreate = [
   authenticateToken,
   async (req: any, res: any) => {
     try {
-      const { id, title, description } = req.body;
+      const { id, title, description }: jobRequest = req.body;
       const response = await database
         .from("jobs")
         .insert([{ title, description, id }]);
