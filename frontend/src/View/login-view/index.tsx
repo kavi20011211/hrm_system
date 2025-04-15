@@ -162,30 +162,15 @@ const LoginPage = () => {
               {" "}
               <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <div style={{ display: "flex", gap: 10 }}>
-                  <Paper bg="#ffffff60" p={10} radius={20}>
-                    <IconSquareRoundedX color="white" size={20} />
-                  </Paper>
-                  <Paper bg="#ffffff60" p={10} radius={20}>
-                    <IconSquareRoundedMinus color="white" size={20} />
-                  </Paper>
-                  <Paper bg="#ffffff60" p={10} radius={20}>
-                    <IconSquareRounded color="white" size={20} />
-                  </Paper>
+                  <Paper bg="#ffffff60" p={10} radius={20}></Paper>
+                  <Paper bg="#ffffff60" p={10} radius={20}></Paper>
+                  <Paper bg="#ffffff60" p={10} radius={20}></Paper>
                 </div>
-                <Paper w={"70%"} bg="#ffffff60" p={10} radius={20}>
-                  <IconFileCv color="white" size={20} />
-                </Paper>
+                <Paper w={"70%"} bg="#ffffff60" p={10} radius={20}></Paper>
               </div>
               <div style={{ marginTop: 50, display: "flex", gap: 10 }}>
-                <Paper
-                  w={"40%"}
-                  bg="#ffffff60"
-                  p={10}
-                  radius={20}
-                  //style={{ display: "flex", alignItems: "center" }}
-                >
+                <Paper w={"40%"} bg="#ffffff60" p={10} radius={20}>
                   {" "}
-                  <IconUserCheck color="white" size={40} />
                 </Paper>
                 <div
                   style={{
