@@ -9,7 +9,7 @@ import AdminUserPage from "./View/admin-view";
 import { MantineProvider } from "@mantine/core";
 
 function App() {
-  const user: string | null = "SQA";
+  const user: string | null = "";
 
   return (
     <MantineProvider>
