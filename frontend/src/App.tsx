@@ -7,14 +7,18 @@ import JobPost from "./View/job-post-view";
 import AdminUserPage from "./View/admin-view";
 
 import { MantineProvider } from "@mantine/core";
+import { FC, useState } from "react";
+interface Props {}
+const App: FC<Props> = () => {
+  const [token, setToken] = useState<string | undefined>();
 
-function App() {
+  console.log(token);
   const user: string | null = "";
 
   return (
     <MantineProvider>
       <Router>
-        {user ? (
+        {token ? (
           <Layout>
             <Routes>
               <Route path="/" element={<Dashboard />} />
@@ -25,11 +29,11 @@ function App() {
             </Routes>
           </Layout>
         ) : (
-          <LoginPage />
+          <LoginPage setToken={setToken} />
         )}
       </Router>
     </MantineProvider>
   );
-}
+};
 
 export default App;

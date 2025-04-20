@@ -1,3 +1,4 @@
+import { login } from "@/api";
 import { Grid, Paper, TextInput, Title, Text, Button } from "@mantine/core";
 import {
   IconBrandFacebook,
@@ -18,12 +19,21 @@ import {
   IconSquares,
   IconUserCheck,
 } from "@tabler/icons-react";
-import { useState } from "react";
+import { FC, useState } from "react";
 
-const LoginPage = () => {
+interface Props {
+  setToken: (type: string) => void;
+}
+
+const LoginPage: FC<Props> = ({ setToken }) => {
   const [signUpShow, setSignUpShow] = useState(false);
 
-  console.log(signUpShow);
+  async function handleLogin() {
+    const userLoginData = await login("123@gmail.com", "1234");
+
+    setToken(userLoginData.token);
+  }
+
   return (
     <>
       {signUpShow === false && (
@@ -64,7 +74,12 @@ const LoginPage = () => {
                 <Text> Password</Text>{" "}
                 <TextInput w={"70%"} placeholder="**********" type="password" />
               </Grid.Col>
-              <Button mt={20} fullWidth bg={"#67C6E3"}>
+              <Button
+                mt={20}
+                fullWidth
+                bg={"#67C6E3"}
+                onClick={() => handleLogin()}
+              >
                 <Text>Login</Text>
               </Button>
               <Grid.Col
