@@ -11,14 +11,12 @@ import { FC, useState } from "react";
 interface Props {}
 const App: FC<Props> = () => {
   const [token, setToken] = useState<string | undefined>();
-
-  console.log(token);
-  const user: string | null = "";
+  const [user, setUser] = useState<any | undefined>();
 
   return (
     <MantineProvider>
       <Router>
-        {token ? (
+        {user ? (
           <Layout>
             <Routes>
               <Route path="/" element={<Dashboard />} />
@@ -29,7 +27,7 @@ const App: FC<Props> = () => {
             </Routes>
           </Layout>
         ) : (
-          <LoginPage setToken={setToken} />
+          <LoginPage setToken={setToken} setUser={setUser} />
         )}
       </Router>
     </MantineProvider>

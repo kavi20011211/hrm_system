@@ -11,6 +11,22 @@ export const login = async (email: string, password: string) => {
       return response.data;
     })
     .catch((error) => {
-      throw new Error(error.response?.data?.error || error.message);
+      return error.response.data;
+    });
+};
+
+export const signup = async (email: string, password: string, name: string) => {
+  const body = {
+    email: email,
+    password: password,
+    name: name,
+  };
+  return axios
+    .post("http://localhost:5000/api/users/signup", body)
+    .then((response) => {
+      return response.data;
+    })
+    .catch((error) => {
+      return error.response.data;
     });
 };

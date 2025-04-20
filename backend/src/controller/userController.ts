@@ -12,13 +12,21 @@ export const signUp = async (req: any, res: any) => {
     return res.status(400).json({ error: "All fields are required" });
   }
 
+  const { data, error, statusText } = await database
+    .from("users")
+    .select("*")
+    .eq("email", email)
+    .single();
+
+  if (data) {
+    return res.status(401).json({ error: "This email already used" });
+  }
+
   const hashedPassword = await bcrypt.hash(password, 10);
 
   const response = await database
     .from("users")
     .insert([{ email, password: hashedPassword, name }]);
-
-  console.log(response);
 
   const token: string = jwt.sign({ name, email }, JWT_SECRET, {
     expiresIn: "1h",
@@ -56,5 +64,5 @@ export const login = async (req: any, res: any) => {
     expiresIn: "1h",
   });
 
-  res.json({ message: statusText, token });
+  res.json({ message: statusText, token, data, error });
 };

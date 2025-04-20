@@ -1,5 +1,13 @@
-import { login } from "@/api";
-import { Grid, Paper, TextInput, Title, Text, Button } from "@mantine/core";
+import { login, signup } from "@/api";
+import {
+  Grid,
+  Paper,
+  TextInput,
+  Title,
+  Text,
+  Button,
+  Alert,
+} from "@mantine/core";
 import {
   IconBrandFacebook,
   IconBrandInstagram,
@@ -23,15 +31,52 @@ import { FC, useState } from "react";
 
 interface Props {
   setToken: (type: string) => void;
+  setUser: (type: any) => void;
 }
 
-const LoginPage: FC<Props> = ({ setToken }) => {
+const LoginPage: FC<Props> = ({ setToken, setUser }) => {
   const [signUpShow, setSignUpShow] = useState(false);
 
-  async function handleLogin() {
-    const userLoginData = await login("123@gmail.com", "1234");
+  const [loginEmail, setLoginEmail] = useState<string | undefined>();
+  const [loginPassword, setLoginPassword] = useState<string | undefined>();
 
-    setToken(userLoginData.token);
+  async function handleLogin() {
+    if (loginEmail && loginPassword) {
+      const userLoginData = await login(loginEmail, loginPassword);
+
+      if (!userLoginData.data || userLoginData.error) {
+        alert("Inavlid credentials");
+      } else {
+        alert("Login successful");
+        setToken(userLoginData.token);
+        setUser(userLoginData.data);
+      }
+    } else {
+      alert("Enter email and password");
+    }
+  }
+
+  const [signUpName, setSignUpName] = useState<string | undefined>();
+  const [signUpEmail, setSignUpEmail] = useState<string | undefined>();
+  const [signUpPassword, setSignUpPassword] = useState<string | undefined>();
+
+  async function handleSignUp() {
+    if (signUpName && signUpEmail && signUpPassword) {
+      const userSignUpData = await signup(
+        signUpEmail,
+        signUpPassword,
+        signUpName
+      );
+
+      if (userSignUpData.error) {
+        alert(userSignUpData.error);
+      } else {
+        alert("Sign up successful");
+        setSignUpShow(false);
+      }
+    } else {
+      alert("Fill the all fields");
+    }
   }
 
   return (
@@ -66,13 +111,22 @@ const LoginPage: FC<Props> = ({ setToken }) => {
                 }}
               >
                 <Text> User Name</Text>{" "}
-                <TextInput w={"70%"} placeholder="John Doe" />
+                <TextInput
+                  w={"70%"}
+                  placeholder="John Doe"
+                  onChange={(event) => setLoginEmail(event.target.value)}
+                />
               </Grid.Col>
               <Grid.Col
                 style={{ display: "flex", justifyContent: "space-between" }}
               >
                 <Text> Password</Text>{" "}
-                <TextInput w={"70%"} placeholder="**********" type="password" />
+                <TextInput
+                  w={"70%"}
+                  placeholder="**********"
+                  type="password"
+                  onChange={(event) => setLoginPassword(event.target.value)}
+                />
               </Grid.Col>
               <Button
                 mt={20}
@@ -266,17 +320,12 @@ const LoginPage: FC<Props> = ({ setToken }) => {
                   gap: 20,
                 }}
               >
-                <Text> First Name</Text>{" "}
-                <TextInput w={"70%"} placeholder="John Doe" />
-              </Grid.Col>
-              <Grid.Col
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                }}
-              >
-                <Text> Last Name</Text>{" "}
-                <TextInput w={"70%"} placeholder="Doe" />
+                <Text> User Name</Text>{" "}
+                <TextInput
+                  w={"70%"}
+                  placeholder="John Doe"
+                  onChange={(event) => setSignUpName(event.target.value)}
+                />
               </Grid.Col>
               <Grid.Col
                 style={{
@@ -285,13 +334,22 @@ const LoginPage: FC<Props> = ({ setToken }) => {
                 }}
               >
                 <Text> Email Address</Text>{" "}
-                <TextInput w={"70%"} placeholder="you@example.com" />
+                <TextInput
+                  w={"70%"}
+                  placeholder="you@example.com"
+                  onChange={(event) => setSignUpEmail(event.target.value)}
+                />
               </Grid.Col>
               <Grid.Col
                 style={{ display: "flex", justifyContent: "space-between" }}
               >
                 <Text> Password</Text>{" "}
-                <TextInput w={"70%"} placeholder="**********" type="password" />
+                <TextInput
+                  w={"70%"}
+                  placeholder="**********"
+                  type="password"
+                  onChange={(event) => setSignUpPassword(event.target.value)}
+                />
               </Grid.Col>
               <Grid.Col
                 style={{ display: "flex", justifyContent: "space-between" }}
@@ -299,7 +357,12 @@ const LoginPage: FC<Props> = ({ setToken }) => {
                 <Text> Confirm Password</Text>{" "}
                 <TextInput w={"70%"} placeholder="**********" type="password" />
               </Grid.Col>
-              <Button mt={20} fullWidth bg={"#67C6E3"}>
+              <Button
+                mt={20}
+                fullWidth
+                bg={"#67C6E3"}
+                onClick={() => handleSignUp()}
+              >
                 <Text c={"white"}>Register</Text>
               </Button>
               <Grid.Col
