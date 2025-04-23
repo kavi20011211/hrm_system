@@ -22,6 +22,7 @@ function App() {
               <Route path="/job-post" element={<JobPost />} />
               <Route path="/register" element={<RegisterPage />} />
               <Route path="/admin-user" element={<AdminUserPage />} />
+              <Route path="/login" element={<LoginPage />} />
             </Routes>
           </Layout>
         ) : (

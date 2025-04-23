@@ -17,6 +17,7 @@ import {
   NotebookPenIcon,
   Users2,
   NetworkIcon,
+  LogInIcon,
 } from "lucide-react"; // Icons
 import routes from "@/config/routes";
 import {
@@ -26,13 +27,19 @@ import {
   DropdownMenuItem,
 } from "@radix-ui/react-dropdown-menu";
 
+type IconComponent = React.ComponentType<{
+  className?: string;
+  size?: number;
+}>;
+
 // Function to map route paths to icons
-const routeIcons: Record<string, any> = {
+const routeIcons: Record<string, IconComponent> = {
   "/": LayoutDashboardIcon,
   "/register": Users2,
   "/job-post": NotebookPenIcon,
   "/admin-user": User2,
   "/job-request": NetworkIcon,
+  "/login": LogInIcon,
 };
 
 export function AppSidebar() {
