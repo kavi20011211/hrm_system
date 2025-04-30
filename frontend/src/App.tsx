@@ -5,7 +5,6 @@ import Dashboard from "./View/dashboard-view";
 import RegisterPage from "./View/register-view";
 import JobPost from "./View/job-post-view";
 import AdminUserPage from "./View/admin-view";
-import ResetPasswordView from "./View/reset-password-view";
 import ForgotPasswordView from "./View/forgot-password-view";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import { MantineProvider } from "@mantine/core";
@@ -30,7 +29,6 @@ function App() {
         />
         <Routes>
           {/* Standalone routes without layout */}
-          <Route path="/reset-password" element={<ResetPasswordView />} />
           <Route path="/forgot-password" element={<ForgotPasswordView />} />
           {/* Routes that use the Layout (Sidebar) */}
           <Route element={<Layout />}>

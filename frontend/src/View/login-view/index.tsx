@@ -210,7 +210,6 @@ const LoginPage: React.FC = () => {
                   name="email"
                   type="email"
                   autoComplete="email"
-                  required
                   disabled={loading}
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -237,7 +236,6 @@ const LoginPage: React.FC = () => {
                   name="password"
                   type="password"
                   autoComplete="current-password"
-                  required
                   disabled={loading}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
