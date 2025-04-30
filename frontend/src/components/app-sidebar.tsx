@@ -1,4 +1,6 @@
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/store";
 import {
   Sidebar,
   SidebarContent,
@@ -26,6 +28,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
 } from "@radix-ui/react-dropdown-menu";
+import { LogoutButton } from "@/components/logout-button";
 
 type IconComponent = React.ComponentType<{
   className?: string;
@@ -43,6 +46,7 @@ const routeIcons: Record<string, IconComponent> = {
 };
 
 export function AppSidebar() {
+  const { isAuthenticated } = useSelector((state: RootState) => state.auth);
   return (
     <Sidebar className="h-screen flex flex-col bg-white">
       <SidebarContent className="flex-1 overflow-y-auto">
@@ -53,6 +57,10 @@ export function AppSidebar() {
           <SidebarGroupContent>
             <SidebarMenu className="space-y-2">
               {routes.mainNav.map((route) => {
+                // Skip rendering the Login route in main nav if already authenticated
+                if (route.path === "/login" && isAuthenticated) {
+                  return null;
+                }
                 const Icon = routeIcons[route.path] || LayoutDashboardIcon; // Default icon if not found
                 return (
                   <SidebarMenuItem key={route.path}>
@@ -65,6 +73,13 @@ export function AppSidebar() {
                   </SidebarMenuItem>
                 );
               })}
+              
+              {/* Show logout button in main sidebar when authenticated */}
+              {isAuthenticated && (
+                <SidebarMenuItem key="main-logout">
+                  <LogoutButton />
+                </SidebarMenuItem>
+              )}
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
@@ -85,6 +100,10 @@ export function AppSidebar() {
               >
                 <DropdownMenuItem>
                   {routes.secondNav.map((route) => {
+                    // If the route is login and user is already authenticated, don't render it
+                    if (route.path === "/login" && isAuthenticated) {
+                      return null;
+                    }
                     const Icon = routeIcons[route.path] || LayoutDashboardIcon;
                     return (
                       <SidebarMenuItem key={route.path}>
@@ -97,10 +116,14 @@ export function AppSidebar() {
                       </SidebarMenuItem>
                     );
                   })}
+                  
+                  {/* Show logout option only when authenticated */}
+                  {isAuthenticated && (
+                    <SidebarMenuItem key="dropdown-logout">
+                      <LogoutButton />
+                    </SidebarMenuItem>
+                  )}
                 </DropdownMenuItem>
-                {/* <DropdownMenuItem>
-                  <span>Sign out</span>
-                </DropdownMenuItem> */}
               </DropdownMenuContent>
             </DropdownMenu>
           </SidebarMenuItem>

@@ -8,13 +8,21 @@ import jobRoutes from "./routes/jobRoutes";
 export const app = express();
 app.use(express.json());
 app.use(cors({
-  origin: 'http://localhost:5173', // Allow requests from the frontend origin
+  origin: ['http://localhost:5173', 'http://localhost:5174'], // Allow requests from both frontend origins
   credentials: true // Allow cookies/authorization headers if needed
 }));
 
 
-//Default Routes
-app.use("/api", userRoutes, sampleRoutes, jobRoutes);
+// Register each route separately to ensure proper handling
+app.use("/api", userRoutes);
+app.use("/api", sampleRoutes);
+app.use("/api", jobRoutes);
+
+// Add route debugging
+app.use((req, res, next) => {
+  console.log(`Request received: ${req.method} ${req.url}`);
+  next();
+});
 
 // Health check endpoint
 app.get("/health", (req: any, res: any) => {

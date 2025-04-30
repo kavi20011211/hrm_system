@@ -1,12 +1,18 @@
-import express from "express";
-import { signUp, login } from "../controller/userController";
+import express, { Request, Response, NextFunction } from "express";
+import { signUp, login, verifyEmail, verifySecurityAnswer, resetPassword } from "../controller/userController";
 
 const router = express.Router();
 
-// Signup Route
-router.post("/users/signup", signUp);
+// Type for Express route handler to overcome TypeScript errors
+type RouteHandler = (req: Request, res: Response, next?: NextFunction) => Promise<any> | any;
 
-// Login Route
-router.post("/users/login", login);
+// Authentication Routes
+router.post("/users/signup", signUp as unknown as RouteHandler);
+router.post("/users/login", login as unknown as RouteHandler);
+
+// Password Reset Routes
+router.post("/users/verify-email", verifyEmail as unknown as RouteHandler);
+router.post("/users/verify-security-answer", verifySecurityAnswer as unknown as RouteHandler);
+router.post("/users/reset-password", resetPassword as unknown as RouteHandler);
 
 export default router;
