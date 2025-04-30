@@ -30,6 +30,7 @@
     "clsx": "^2.1.1",
     "lucide-react": "^0.485.0",
     "next": "^15.2.4",
+    "node-fetch": "^3.3.2",
     "react": "^19.1.0",
     "react-apexcharts": "^1.7.0",
     "react-dom": "^19.1.0",
@@ -43,6 +44,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.21.0",
+    "@playwright/test": "^1.52.0",
     "@types/node": "^22.13.14",
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",

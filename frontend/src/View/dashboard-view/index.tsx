@@ -1,11 +1,24 @@
 import { Grid, Title, Text, Button, Paper, RingProgress } from "@mantine/core";
 import { IconBriefcase } from "@tabler/icons-react";
 import React, { Component } from "react";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
+import { useDispatch } from "react-redux";
+import { logout } from "@/store/authSlice";
 
 import dynamic from "next/dynamic";
 const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
 const Dashboard = () => {
+  const navigate = useNavigate(); // Get navigate function
+  const dispatch = useDispatch();
+
+  // Logout handler
+  const handleLogout = () => {
+    // Use Redux logout action instead of directly manipulating localStorage
+    dispatch(logout());
+    navigate('/login'); // Redirect to login
+  };
+
   const chartData = {
     options: {
       chart: {
@@ -117,6 +130,7 @@ const Dashboard = () => {
                   color: "#AF1740",
                   border: "1px solid #AF1740",
                 }}
+                onClick={handleLogout} // Add onClick handler
               >
                 Sign Out
               </Button>

@@ -4,6 +4,7 @@ import Dashboard from "@/View/dashboard-view";
 import EmployeeSelectionView from "@/View/employee-select-view";
 import JobPost from "@/View/job-post-view";
 import RegisterPage from "@/View/register-view";
+import LoginPage from "@/View/login-view";
 
 const routes: RouteConfig = {
   mainNav: [
@@ -26,6 +27,11 @@ const routes: RouteConfig = {
       path: "/job-request",
       name: "Job Requests",
       component: <EmployeeSelectionView />,
+    },
+    {
+      path: "/login",
+      name: "Login",
+      component: <LoginPage />,
     },
   ],
   secondNav: [
