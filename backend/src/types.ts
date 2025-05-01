@@ -27,3 +27,10 @@ export interface ResetPasswordRequest {
   newPassword: string;
   resetToken: string;
 }
+
+export interface employeeRequest {
+  name: string;
+  email: string;
+  category: string;
+  id: string;
+}
