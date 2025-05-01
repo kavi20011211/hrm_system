@@ -11,6 +11,8 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
+import { API_ENDPOINTS } from "@/config/api";
+import { toast } from "react-toastify";
 
 const formSchema = z.object({
   firstName: z
@@ -78,8 +80,52 @@ const RegisterPage = () => {
 
   type FormData = z.infer<typeof formSchema>;
 
-  const onSubmit = (data: FormData) => {
+  const onSubmit = async (data: FormData) => {
     console.log("Admin Data:", data);
+    try {
+      const response = await fetch(API_ENDPOINTS.admin + "/create", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: JSON.stringify({
+          firstName: data.firstName,
+          lastName: data.lastName,
+          email: data.email,
+          contact: data.contact,
+          nic: data.nic,
+          password: data.password,
+          confirm_password: data.confirm_password,
+        }),
+      });
+
+      if (response.status !== 200) {
+        const error = await response.text();
+        let errorMessage = error;
+
+        try {
+          const errorData = JSON.parse(error);
+          errorMessage = errorData.error || errorMessage;
+        } catch {
+          errorMessage = error || errorMessage;
+        }
+
+        if (response.status === 400) {
+          errorMessage = "Required fields must be filled with values";
+        }
+
+        toast.error(errorMessage);
+        throw new Error(errorMessage);
+      }
+
+      toast.success("Admin created successfully!");
+    } catch (error: any) {
+      const errorMessage =
+        error instanceof Error ? error.message : "An unexpected error occurred";
+
+      toast.error(errorMessage);
+    }
   };
   return (
     <div className="w-4/5 h-4/5 bg-white rounded-2xl shadow-lg absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
