@@ -14,9 +14,18 @@ import {
 import { Button } from "@/components/ui/button";
 
 const formSchema = z.object({
-  jobID: z.string().min(1, "Job ID is required"),
-  jobTitle: z.string().min(1, "Job title is required"),
-  jobDescription: z.string().min(1, "Job description is required"),
+  jobID: z
+    .string()
+    .min(1, "Job ID is required")
+    .max(10, "Job ID must be at most 10 characters"),
+  jobTitle: z
+    .string()
+    .min(1, "Job title is required")
+    .max(30, "Job title must be at most 30 characters"),
+  jobDescription: z
+    .string()
+    .min(1, "Job description is required")
+    .max(1000, "Job description must be at most 1000 characters"),
 });
 const JobPost = () => {
   const form = useForm({
@@ -27,7 +36,10 @@ const JobPost = () => {
       jobDescription: "",
     },
   });
-  const onSubmit = (data: any) => {
+
+  type FormData = z.infer<typeof formSchema>;
+
+  const onSubmit = (data: FormData) => {
     console.log("Job Post Data:", data);
   };
   return (
@@ -53,7 +65,7 @@ const JobPost = () => {
                       className="mb-5"
                     />
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage className="text-red-700" />
                 </FormItem>
               )}
             />
@@ -73,7 +85,7 @@ const JobPost = () => {
                       className="mb-5"
                     />
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage className="text-red-700" />
                 </FormItem>
               )}
             />
@@ -93,7 +105,7 @@ const JobPost = () => {
                       className="mb-5"
                     />
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage className="text-red-700" />
                 </FormItem>
               )}
             />
