@@ -1,6 +1,7 @@
 import { database } from "../config/db-config";
 import { authenticateToken } from "../middlewares/auth";
 
+
 // View Admin Profile
 export const viewAdminProfile = [
   authenticateToken,

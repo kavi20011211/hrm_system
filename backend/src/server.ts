@@ -5,6 +5,7 @@ import { authenticateToken } from "./middlewares/auth";
 import userRoutes from "./routes/userRoutes";
 import sampleRoutes from "./routes/sampleRoutes";
 import jobRoutes from "./routes/jobRoutes";
+import adminRoutes from "./routes/adminRoutes";
 export const app = express();
 app.use(express.json());
 app.use(cors({
@@ -17,6 +18,7 @@ app.use(cors({
 app.use("/api", userRoutes);
 app.use("/api", sampleRoutes);
 app.use("/api", jobRoutes);
+app.use("/api",adminRoutes);
 
 // Add route debugging
 app.use((req, res, next) => {
