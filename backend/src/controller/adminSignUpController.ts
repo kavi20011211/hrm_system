@@ -21,7 +21,7 @@ export const adminSignUp = [
         !contact ||
         !nic ||
         !password ||
-        confirm_password
+        !confirm_password
       ) {
         return res
           .status(400)
@@ -40,7 +40,6 @@ export const adminSignUp = [
           contact,
           nic,
           password,
-          confirm_password,
         },
       ]);
 

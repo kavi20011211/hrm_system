@@ -15,7 +15,7 @@ export const jobPostCreate = [
       }
       const response = await database
         .from("jobs")
-        .insert([{ title, description, id }]);
+        .insert([{ id, title, description }]);
 
       res.status(200).json({ message: response.statusText });
     } catch (error) {
