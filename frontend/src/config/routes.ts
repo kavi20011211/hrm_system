@@ -22,6 +22,10 @@ const mainNav: Route[] = [
     path: "/admin-user",
     name: "Admin Panel",
   },
+  {
+    path: "/employee",
+    name: "Employee Section",
+  },
 ];
 
 // Secondary navigation routes (for user dropdown)

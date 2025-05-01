@@ -43,6 +43,7 @@ const routeIcons: Record<string, IconComponent> = {
   "/admin-user": User2,
   "/job-request": NetworkIcon,
   "/login": LogInIcon,
+  "/employee": Users2,
 };
 
 export function AppSidebar() {
@@ -73,7 +74,7 @@ export function AppSidebar() {
                   </SidebarMenuItem>
                 );
               })}
-              
+
               {/* Show logout button in main sidebar when authenticated */}
               {isAuthenticated && (
                 <SidebarMenuItem key="main-logout">
@@ -116,7 +117,7 @@ export function AppSidebar() {
                       </SidebarMenuItem>
                     );
                   })}
-                  
+
                   {/* Show logout option only when authenticated */}
                   {isAuthenticated && (
                     <SidebarMenuItem key="dropdown-logout">

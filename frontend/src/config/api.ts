@@ -9,6 +9,7 @@ export const API_ENDPOINTS = {
   signup: `${API_BASE_URL}/api/users/signup`,
   jobs: `${API_BASE_URL}/api/jobs/create`,
   admin: `${API_BASE_URL}/api/admin`,
+  employee: `${API_BASE_URL}/api/employee/create`,
 
   // Password Reset Flow
   verifyEmail: `${API_BASE_URL}/api/users/verify-email`,
