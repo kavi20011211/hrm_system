@@ -1,5 +1,4 @@
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -12,11 +11,57 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
+import { API_ENDPOINTS } from "@/config/api";
+import { toast } from "react-toastify";
 
 const formSchema = z.object({
-  firstName: z.string().min(1, "Admin user first name is required"),
-  lastName: z.string().min(1, "Admin user last name is required"),
-  nic: z.string().min(1, "Admin user NIC is required"),
+  firstName: z
+    .string()
+    .min(1, "Admin user first name is required")
+    .max(50, "Admin's firsname length should be maximum 50 characters"),
+  lastName: z
+    .string()
+    .min(1, "Admin user last name is required")
+    .max(50, "Admin's lastname length should be maximum 50 characters"),
+  email: z
+    .string()
+    .email("Invalid email address")
+    .min(1, "Email is required")
+    .max(100, "Email must be at most 100 characters long"),
+
+  contact: z
+    .string()
+    .min(10, "Contact number must be at least 10 digits")
+    .max(15, "Contact number must be at most 15 digits")
+    .regex(/^\d+$/, "Contact number must contain only digits"),
+  nic: z
+    .string()
+    .min(10, "Admin user valied NIC is required")
+    .max(15, "Admin's NIC length should be maximum 15 characters"),
+
+  password: z
+    .string()
+    .min(8, "Password must be at least 8 characters long")
+    .max(50, "Password must be at most 50 characters long")
+    .regex(/[A-Z]/, "Password must contain at least one uppercase letter")
+    .regex(/[a-z]/, "Password must contain at least one lowercase letter")
+    .regex(/[0-9]/, "Password must contain at least one number")
+    .regex(
+      /[@$!%*?&#]/,
+      "Password must contain at least one special character"
+    ),
+
+  confirm_password: z
+    .string()
+    .min(8, "Password must be at least 8 characters long")
+    .max(50, "Password must be at most 50 characters long")
+    .regex(/[A-Z]/, "Password must contain at least one uppercase letter")
+    .regex(/[a-z]/, "Password must contain at least one lowercase letter")
+    .regex(/[0-9]/, "Password must contain at least one number")
+    .regex(
+      /[@$!%*?&#]/,
+      "Password must contain at least one special character"
+    ),
 });
 
 const RegisterPage = () => {
@@ -26,10 +71,61 @@ const RegisterPage = () => {
       firstName: "",
       lastName: "",
       nic: "",
+      email: "",
+      contact: "",
+      password: "",
+      confirm_password: "",
     },
   });
-  const onSubmit = (data: any) => {
+
+  type FormData = z.infer<typeof formSchema>;
+
+  const onSubmit = async (data: FormData) => {
     console.log("Admin Data:", data);
+    try {
+      const response = await fetch(API_ENDPOINTS.admin + "/create", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: JSON.stringify({
+          firstName: data.firstName,
+          lastName: data.lastName,
+          email: data.email,
+          contact: data.contact,
+          nic: data.nic,
+          password: data.password,
+          confirm_password: data.confirm_password,
+        }),
+      });
+
+      if (response.status !== 200) {
+        const error = await response.text();
+        let errorMessage = error;
+
+        try {
+          const errorData = JSON.parse(error);
+          errorMessage = errorData.error || errorMessage;
+        } catch {
+          errorMessage = error || errorMessage;
+        }
+
+        if (response.status === 400) {
+          errorMessage = "Required fields must be filled with values";
+        }
+
+        toast.error(errorMessage);
+        throw new Error(errorMessage);
+      }
+
+      toast.success("Admin created successfully!");
+    } catch (error: any) {
+      const errorMessage =
+        error instanceof Error ? error.message : "An unexpected error occurred";
+
+      toast.error(errorMessage);
+    }
   };
   return (
     <div className="w-4/5 h-4/5 bg-white rounded-2xl shadow-lg absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
@@ -54,7 +150,7 @@ const RegisterPage = () => {
                       className="mb-5"
                     />
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage className="text-red-700" />
                 </FormItem>
               )}
             />
@@ -74,7 +170,28 @@ const RegisterPage = () => {
                       className="mb-5"
                     />
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage className="text-red-700" />
+                </FormItem>
+              )}
+            />
+
+            {/* email */}
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Email</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="text"
+                      placeholder="Enter email"
+                      required
+                      {...field}
+                      className="mb-5"
+                    />
+                  </FormControl>
+                  <FormMessage className="text-red-700" />
                 </FormItem>
               )}
             />
@@ -94,7 +211,70 @@ const RegisterPage = () => {
                       className="mb-5"
                     />
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage className="text-red-700" />
+                </FormItem>
+              )}
+            />
+
+            {/* contact */}
+            <FormField
+              control={form.control}
+              name="contact"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Contact number</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="numbers"
+                      placeholder="Enter contact number"
+                      required
+                      {...field}
+                      className="mb-5"
+                    />
+                  </FormControl>
+                  <FormMessage className="text-red-700" />
+                </FormItem>
+              )}
+            />
+
+            {/* password */}
+            <FormField
+              control={form.control}
+              name="confirm_password"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Password</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="password"
+                      placeholder="Enter password"
+                      required
+                      {...field}
+                      className="mb-5"
+                    />
+                  </FormControl>
+                  <FormMessage className="text-red-700" />
+                </FormItem>
+              )}
+            />
+
+            {/* confirm password */}
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Confirm password</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="password"
+                      placeholder="Enter confirm password"
+                      required
+                      {...field}
+                      className="mb-5"
+                    />
+                  </FormControl>
+                  <FormMessage className="text-red-700" />
                 </FormItem>
               )}
             />

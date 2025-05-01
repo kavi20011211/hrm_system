@@ -8,11 +8,16 @@ export const jobPostCreate = [
   async (req: any, res: any) => {
     try {
       const { id, title, description } = req.body;
+      if (!id || !title || !description) {
+        return res
+          .status(400)
+          .json({ error: "All required fields must  be filled with values" });
+      }
       const response = await database
         .from("jobs")
-        .insert([{ title, description, id }]);
+        .insert([{ id, title, description }]);
 
-      res.json({ message: response.statusText });
+      res.status(200).json({ message: response.statusText });
     } catch (error) {
       console.error(error);
     }

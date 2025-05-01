@@ -12,23 +12,77 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
+import { API_ENDPOINTS } from "@/config/api";
+import { toast } from "react-toastify";
 
 const formSchema = z.object({
-  jobID: z.string().min(1, "Job ID is required"),
-  jobTitle: z.string().min(1, "Job title is required"),
-  jobDescription: z.string().min(1, "Job description is required"),
+  id: z
+    .string()
+    .min(1, "Job ID is required")
+    .max(10, "Job ID must be at most 10 characters"),
+  title: z
+    .string()
+    .min(1, "Job title is required")
+    .max(30, "Job title must be at most 30 characters"),
+  description: z
+    .string()
+    .min(1, "Job description is required")
+    .max(1000, "Job description must be at most 1000 characters"),
 });
 const JobPost = () => {
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      jobID: "",
-      jobTitle: "",
-      jobDescription: "",
+      id: "",
+      title: "",
+      description: "",
     },
   });
-  const onSubmit = (data: any) => {
+
+  type FormData = z.infer<typeof formSchema>;
+
+  const onSubmit = async (data: FormData) => {
     console.log("Job Post Data:", data);
+    try {
+      const response = await fetch(API_ENDPOINTS.jobs, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: JSON.stringify({
+          id: data.id,
+          title: data.title,
+          description: data.description,
+        }),
+      });
+
+      if (response.status !== 200) {
+        const error = await response.text();
+        let errorMessage = error;
+
+        try {
+          const errorData = JSON.parse(error);
+          errorMessage = errorData.error || errorMessage;
+        } catch {
+          errorMessage = error || errorMessage;
+        }
+
+        if (response.status === 400) {
+          errorMessage = "Required fields must be filled with values";
+        }
+
+        toast.error(errorMessage);
+        throw new Error(errorMessage);
+      }
+
+      toast.success("Job created successfully!");
+    } catch (error: any) {
+      const errorMessage =
+        error instanceof Error ? error.message : "An unexpected error occurred";
+
+      toast.error(errorMessage);
+    }
   };
   return (
     <div className="w-4/5 h-4/5 bg-white rounded-2xl shadow-lg absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
@@ -41,7 +95,7 @@ const JobPost = () => {
             {/* Job ID field */}
             <FormField
               control={form.control}
-              name="jobID"
+              name="id"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Job ID</FormLabel>
@@ -53,7 +107,7 @@ const JobPost = () => {
                       className="mb-5"
                     />
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage className="text-red-700" />
                 </FormItem>
               )}
             />
@@ -61,7 +115,7 @@ const JobPost = () => {
             {/* Job Title */}
             <FormField
               control={form.control}
-              name="jobTitle"
+              name="title"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Job Title</FormLabel>
@@ -73,7 +127,7 @@ const JobPost = () => {
                       className="mb-5"
                     />
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage className="text-red-700" />
                 </FormItem>
               )}
             />
@@ -81,7 +135,7 @@ const JobPost = () => {
             {/* Job Description */}
             <FormField
               control={form.control}
-              name="jobDescription"
+              name="description"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Job Description</FormLabel>
@@ -93,7 +147,7 @@ const JobPost = () => {
                       className="mb-5"
                     />
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage className="text-red-700" />
                 </FormItem>
               )}
             />
