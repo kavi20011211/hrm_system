@@ -6,6 +6,7 @@ import RegisterPage from "./View/register-view";
 import JobPost from "./View/job-post-view";
 import AdminUserPage from "./View/admin-view";
 import ForgotPasswordView from "./View/forgot-password-view";
+import SalaryCalculator from "./View/salary-calculator-view";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import { MantineProvider } from "@mantine/core";
 import { ToastContainer } from 'react-toastify';
@@ -41,6 +42,7 @@ function App() {
               <Route path="/register" element={<RegisterPage />} />
               <Route path="/job-post" element={<JobPost />} />
               <Route path="/admin-user" element={<AdminUserPage />} />
+              <Route path="/salary-calculator" element={<SalaryCalculator />} />
             </Route>
           </Route>
         </Routes>

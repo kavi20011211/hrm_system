@@ -20,6 +20,7 @@ import {
   Users2,
   NetworkIcon,
   LogInIcon,
+  CalculatorIcon,
 } from "lucide-react"; // Icons
 import routes from "@/config/routes";
 import {
@@ -43,6 +44,7 @@ const routeIcons: Record<string, IconComponent> = {
   "/admin-user": User2,
   "/job-request": NetworkIcon,
   "/login": LogInIcon,
+  "/salary-calculator": CalculatorIcon,
 };
 
 export function AppSidebar() {
