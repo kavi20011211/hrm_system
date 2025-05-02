@@ -7,9 +7,8 @@ import AuthFooter from '@/components/auth-footer';
 /**
  * Forgot Password View
  * 
- * A simplified password reset flow that uses verification codes 
- * instead of email for demonstration purposes.
  */
+
 const ForgotPasswordView: React.FC = () => {
   // Hook to navigate between pages
   const navigate = useNavigate();

@@ -13,6 +13,7 @@ import {
   Box,
   Switch,
 } from '@mantine/core';
+import { toast } from 'react-toastify';
 
 // Define interfaces
 interface TaxBracket {
@@ -66,7 +67,21 @@ const SalaryCalculator: React.FC = () => {
 
   // Handle form submission
   const handleCalculate = () => {
-    if (grossSalary <= 0) return;
+    if (grossSalary <= 0) {
+      toast.error('Please enter a valid salary amount greater than zero');
+      return;
+    }
+    
+    // Validate rate values
+    if (epfRate < 0 || epfRate > 100) {
+      toast.error('EPF rate must be between 0% and 100%');
+      return;
+    }
+    
+    if (etfRate < 0 || etfRate > 100) {
+      toast.error('ETF rate must be between 0% and 100%');
+      return;
+    }
     
     // Calculate EPF (employee contribution)
     const epfDeduction = grossSalary * (epfRate / 100);
@@ -92,7 +107,7 @@ const SalaryCalculator: React.FC = () => {
       // Calculate taxable amount in this bracket
       const taxableAmount = max === null ? 
         remainingSalary : 
-        Math.min(remainingSalary, max - min + 1);
+        Math.min(remainingSalary, max - min);
       
       if (taxableAmount <= 0) continue;
       
@@ -133,6 +148,9 @@ const SalaryCalculator: React.FC = () => {
       taxBreakdown,
       effectiveTaxRate
     });
+    
+    // Show success toast
+    toast.success('Salary calculation completed successfully');
   };
 
   // Handle tax bracket rate change
@@ -155,7 +173,7 @@ const SalaryCalculator: React.FC = () => {
           <Grid>
             <Grid.Col span={12}>
               <Paper p="md" withBorder radius="md" mb="md">
-                <Title order={3} mb="md" size="h4">Salary Information</Title>
+                <Title order={3} mb="md" data-testid="salary-info-title">Salary Information</Title>
                 <NumberInput
                   label="Monthly Gross Salary (LKR)"
                   placeholder="Enter your monthly gross salary"
@@ -165,6 +183,7 @@ const SalaryCalculator: React.FC = () => {
                   value={grossSalary}
                   onChange={(val) => val !== undefined && setGrossSalary(val)}
                   required
+                  data-testid="gross-salary-input"
                   mb="md"
                   rightSection={<Text size="xs" color="dimmed">LKR</Text>}
                 />
@@ -175,7 +194,7 @@ const SalaryCalculator: React.FC = () => {
           <Grid>
             <Grid.Col span={12} md={6}>
               <Paper p="md" withBorder radius="md" mb="md">
-                <Title order={3} mb="md" size="h4">Contribution Rates</Title>
+                <Title order={3} mb="md" data-testid="contribution-rates-title">Contribution Rates</Title>
                 <NumberInput
                   label="EPF Rate (%)"
                   description="Employee Provident Fund contribution percentage"
@@ -185,6 +204,7 @@ const SalaryCalculator: React.FC = () => {
                   max={20}
                   value={epfRate}
                   onChange={(val) => val !== undefined && setEpfRate(val)}
+                  data-testid="epf-rate-input"
                   mb="sm"
                 />
                 
@@ -197,6 +217,7 @@ const SalaryCalculator: React.FC = () => {
                   max={20}
                   value={etfRate}
                   onChange={(val) => val !== undefined && setEtfRate(val)}
+                  data-testid="etf-rate-input"
                 />
               </Paper>
             </Grid.Col>
@@ -204,11 +225,16 @@ const SalaryCalculator: React.FC = () => {
             <Grid.Col span={12} md={6}>
               <Paper p="md" withBorder radius="md" mb="md">
                 <Group position="apart" mb="md">
-                  <Title order={3} size="h4">Tax Brackets</Title>
+                  <Title order={3} size="h4" data-testid="tax-brackets-title">Tax Brackets</Title>
                   <Switch
-                    label="Custom Tax Rates"
+                    label={<span data-testid="custom-tax-switch">Custom Tax Rates</span>}
                     checked={customRates}
                     onChange={(event) => setCustomRates(event.currentTarget.checked)}
+                    mb="sm"
+                    classNames={{
+                      label: 'custom-tax-label',
+                      root: 'custom-tax-root'
+                    }}
                   />
                 </Group>
                 
@@ -221,6 +247,7 @@ const SalaryCalculator: React.FC = () => {
                       max={50}
                       value={taxBrackets[0].rate}
                       onChange={(val) => handleTaxRateChange(0, val as number)}
+                      data-testid="tax-bracket-0-input"
                       mb="xs"
                     />
                     
@@ -231,6 +258,7 @@ const SalaryCalculator: React.FC = () => {
                       max={50}
                       value={taxBrackets[1].rate}
                       onChange={(val) => handleTaxRateChange(1, val as number)}
+                      data-testid="tax-bracket-1-input"
                       mb="xs"
                     />
                     
@@ -271,6 +299,7 @@ const SalaryCalculator: React.FC = () => {
               onClick={handleCalculate} 
               size="lg" 
               color="blue"
+              data-testid="calculate-button"
             >
               Calculate Salary
             </Button>
@@ -279,7 +308,7 @@ const SalaryCalculator: React.FC = () => {
       </Paper>
       
       {results && (
-        <Paper p="xl" shadow="md" radius="md" withBorder>
+        <Paper p="xl" shadow="md" radius="md" withBorder data-testid="results-container">
           <Title order={2} align="center" mb="lg">
             Salary Calculation Results
           </Title>
@@ -322,15 +351,15 @@ const SalaryCalculator: React.FC = () => {
             <Grid.Col span={12} md={6}>
               <Paper p="md" withBorder radius="md" mb="md">
                 <Title order={3} mb="md" size="h4">Tax Breakdown</Title>
-                {results.taxBreakdown.map((bracket, index) => (
+                {results.taxBreakdown.map((bracket) => (
                   <Box 
-                    key={index} 
+                    key={`${bracket.bracket}-${bracket.taxRate}`} 
                     mb="md" 
                     p="xs" 
                     sx={{ 
                       borderLeft: '3px solid #3498DB', 
                       paddingLeft: '10px', 
-                      backgroundColor: index % 2 === 0 ? '#f8f9fa' : 'white' 
+                      backgroundColor: bracket.bracket.includes('Above') ? '#f8f9fa' : 'white' 
                     }}
                   >
                     <Group position="apart">
