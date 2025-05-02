@@ -9,14 +9,15 @@ import AdminProfilePage from "./View/admin-profile-view"
 import ForgotPasswordView from "./View/forgot-password-view";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import { MantineProvider } from "@mantine/core";
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import EmployeeSelectionView from "./View/employee-select-view";
 
 function App() {
   return (
     <MantineProvider>
       <Router>
-        <ToastContainer 
+        <ToastContainer
           position="top-right"
           autoClose={3000}
           hideProgressBar={false}
@@ -35,7 +36,7 @@ function App() {
           <Route element={<Layout />}>
             {/* Public Routes (accessible with sidebar) */}
             <Route path="/login" element={<LoginPage />} />
-            
+
             {/* Protected Routes - require authentication */}
             <Route element={<ProtectedRoute />}>
               <Route path="/" element={<Dashboard />} />
@@ -43,6 +44,8 @@ function App() {
               <Route path="/job-post" element={<JobPost />} />
               <Route path="/admin-user" element={<AdminUserPage />} />
               <Route path="/admin-profile" element={<AdminProfilePage />} />
+              <Route path="/employee" element={<EmployeeSelectionView />} />
+
             </Route>
           </Route>
         </Routes>

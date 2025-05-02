@@ -7,7 +7,12 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+playwright-report
+test-results
 node_modules
+# Playwright test results and reports
+test-result/
+playwright-report/
 dist
 dist-ssr
 *.local
@@ -23,3 +28,4 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+

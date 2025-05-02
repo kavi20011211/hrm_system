@@ -48,7 +48,7 @@ const formSchema = z.object({
     .regex(/[0-9]/, "Password must contain at least one number")
     .regex(
       /[@$!%*?&#]/,
-      "Password must contain at least one special character"
+      "Password is weak and must contain at least one special character with atleast all 8 characters"
     ),
 
   confirm_password: z
@@ -83,6 +83,11 @@ const RegisterPage = () => {
   const onSubmit = async (data: FormData) => {
     console.log("Admin Data:", data);
     try {
+      if (data.password !== data.confirm_password) {
+        toast.error("Passwords are mismatched!", {
+          autoClose: 5000,
+        });
+      }
       const response = await fetch(API_ENDPOINTS.admin + "/create", {
         method: "POST",
         headers: {
@@ -115,7 +120,7 @@ const RegisterPage = () => {
           errorMessage = "Required fields must be filled with values";
         }
 
-        toast.error(errorMessage);
+        // toast.error(errorMessage);
         throw new Error(errorMessage);
       }
 
@@ -123,12 +128,12 @@ const RegisterPage = () => {
     } catch (error: any) {
       const errorMessage =
         error instanceof Error ? error.message : "An unexpected error occurred";
-
-      toast.error(errorMessage);
+      console.log(errorMessage);
+      // toast.error(errorMessage);
     }
   };
   return (
-    <div className="w-4/5 h-4/5 bg-white rounded-2xl shadow-lg absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+    <div className="w-4/5 h-auto bg-white rounded-2xl shadow-lg absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
       <div className="w-full p-5 flex justify-between">
         <h4 className="text-2xl font-bold">Register an admin user</h4>
       </div>
@@ -274,7 +279,7 @@ const RegisterPage = () => {
                       className="mb-5"
                     />
                   </FormControl>
-                  <FormMessage className="text-red-700" />
+                  {/* <FormMessage className="text-red-700" /> */}
                 </FormItem>
               )}
             />
