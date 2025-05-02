@@ -6,11 +6,8 @@ import userRoutes from "./routes/userRoutes";
 import sampleRoutes from "./routes/sampleRoutes";
 import jobRoutes from "./routes/jobRoutes";
 import adminRoutes from "./routes/adminRoutes";
-<<<<<<< HEAD
-=======
 import employeeRoutes from "./routes/employeeRoutes";
 
->>>>>>> 8e048c3901b71626ec9e68ba34f4d5806ed226a6
 export const app = express();
 app.use(express.json());
 app.use(
@@ -24,12 +21,8 @@ app.use(
 app.use("/api", userRoutes);
 app.use("/api", sampleRoutes);
 app.use("/api", jobRoutes);
-<<<<<<< HEAD
 app.use("/api",adminRoutes);
-=======
-app.use("/api", adminRoutes);
 app.use("/api", employeeRoutes); // Apply JWT authentication middleware to all routes
->>>>>>> 8e048c3901b71626ec9e68ba34f4d5806ed226a6
 
 // Add route debugging
 app.use((req, res, next) => {

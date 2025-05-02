@@ -90,7 +90,7 @@ const LoginPage = () => {
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="mb-5">
               <label>Email</label>
-              <Input placeholder="Enter your email" {...register("email")} />
+              <Input id="email" placeholder="Enter your email" {...register("email")} />
               {errors.email && (
                 <span className="text-red-500 text-sm">
                   {errors.email.message}
@@ -100,7 +100,7 @@ const LoginPage = () => {
 
             <div className="mb-5">
               <label>Password</label>
-              <Input
+              <Input id="password"
                 type="password"
                 placeholder="Enter your password"
                 {...register("password")}

@@ -28,12 +28,9 @@ export interface ResetPasswordRequest {
   resetToken: string;
 }
 
-<<<<<<< HEAD
-=======
 export interface employeeRequest {
   name: string;
   email: string;
   category: string;
   id: string;
 }
->>>>>>> 8e048c3901b71626ec9e68ba34f4d5806ed226a6

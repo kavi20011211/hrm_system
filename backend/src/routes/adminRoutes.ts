@@ -1,6 +1,6 @@
 import express from "express";
+import { adminSignUp } from "../controller/adminSignUpController";
 
-<<<<<<< HEAD
 // import {
 //   viewAdminProfile,
 //   editAdminProfile,
@@ -29,12 +29,7 @@ const router = express.Router();
 
 // Login Route
 router.post("/admin/login", loginAdmin);  // Add login route
-=======
-import { adminSignUp } from "../controller/adminSignUpController";
-
-const router = express.Router();
 
 router.post("/admin/create", ...adminSignUp);
->>>>>>> 8e048c3901b71626ec9e68ba34f4d5806ed226a6
 
 export default router;
