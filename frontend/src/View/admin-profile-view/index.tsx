@@ -73,9 +73,25 @@ const ProfilePage: React.FC = () => {
 
   const handleSave = () => {
     if (!profile) return;
-    const { firstName, lastName, email, password, confirmPassword, nic, contact } = profile;
+    const {
+      firstName,
+      lastName,
+      email,
+      password,
+      confirmPassword,
+      nic,
+      contact,
+    } = profile;
 
-    if (!firstName || !lastName || !email || !password || !confirmPassword || !nic || !contact) {
+    if (
+      !firstName ||
+      !lastName ||
+      !email ||
+      !password ||
+      !confirmPassword ||
+      !nic ||
+      !contact
+    ) {
       toast.warn("All fields must be filled.", {
         position: "top-right",
         autoClose: 3000,
@@ -111,16 +127,18 @@ const ProfilePage: React.FC = () => {
   const handleLogout = () => {
     localStorage.removeItem("adminProfile");
     toast.success("Logged Out successfully!", {
-              position: "top-right",
-              autoClose: 3000,
-            });
+      position: "top-right",
+      autoClose: 3000,
+    });
     navigate("/admin-user");
   };
-  
-
 
   if (!profile) {
-    return <div className="no-profile-message">No profile data found. Please log in.</div>;
+    return (
+      <div className="no-profile-message">
+        No profile data found. Please log in.
+      </div>
+    );
   }
 
   const fields = [
@@ -137,15 +155,27 @@ const ProfilePage: React.FC = () => {
     <div className="profile-page-container">
       <div className="profile-header-banner">
         <h2>Hello {profile.firstName}</h2>
-        <p>This is your profile page. You can see the progress you've made with your work and manage your projects or assigned tasks</p>
-        <Button onClick={() => setIsEditing(true)} className="edit-profile-btn">Edit profile</Button>
+        <p>
+          This is your profile page. You can see the progress you've made with
+          your work and manage your projects or assigned tasks
+        </p>
+        <Button
+          type="button"
+          onClick={() => setIsEditing(true)}
+          className="edit-profile-btn"
+        >
+          Edit profile
+        </Button>
       </div>
 
       <div className="profile-main-card">
         <div className="profile-left-section">
           <div className="profile-picture-container">
             <img
-              src={profile.image || "https://t3.ftcdn.net/jpg/02/43/12/34/360_F_243123463_zTooub557xEWABDLk0jJklDyLSGl2jrr.jpg"}
+              src={
+                profile.image ||
+                "https://t3.ftcdn.net/jpg/02/43/12/34/360_F_243123463_zTooub557xEWABDLk0jJklDyLSGl2jrr.jpg"
+              }
               alt="Profile"
               className="profile-picture"
             />
@@ -158,7 +188,10 @@ const ProfilePage: React.FC = () => {
                   onChange={handleImageChange}
                   hidden
                 />
-                <Button onClick={triggerFileInput} className="button-edit-picture">
+                <Button
+                  onClick={triggerFileInput}
+                  className="button-edit-picture"
+                >
                   Change Picture
                 </Button>
               </>
@@ -197,30 +230,39 @@ const ProfilePage: React.FC = () => {
           {isEditing && passwordMatch && (
             <div
               className={`text-sm font-medium ${
-                passwordMatch.includes("not") ? "text-red-500" : "text-green-500"
+                passwordMatch.includes("not")
+                  ? "text-red-500"
+                  : "text-green-500"
               }`}
             >
               {passwordMatch}
             </div>
           )}
 
-
           <div className="button-group">
             {isEditing ? (
               <>
                 <Button
+                  type="submit"
                   onClick={handleSave}
                   className="button-save"
                   disabled={passwordMatch?.includes("not")}
                 >
                   Save
                 </Button>
-                <Button onClick={() => setIsEditing(false)} className="button-cancel">
+                <Button
+                  onClick={() => setIsEditing(false)}
+                  className="button-cancel"
+                >
                   Cancel
                 </Button>
               </>
             ) : (
-              <Button onClick={handleLogout} className="button-delete">
+              <Button
+                type="submit"
+                onClick={handleLogout}
+                className="button-delete"
+              >
                 Logout
               </Button>
             )}
