@@ -8,18 +8,34 @@ export const jobPostCreate = [
   async (req: any, res: any) => {
     try {
       const { id, title, description } = req.body;
+
       if (!id || !title || !description) {
         return res
           .status(400)
-          .json({ error: "All required fields must  be filled with values" });
+          .json({ error: "All required fields must be filled with values" });
+      }
+
+      const isJobExist = await database.from("jobs").select("id").eq("id", id);
+
+      if (isJobExist.error) {
+        return res.status(500).json({ error: "Database error occurred" });
+      }
+
+      if (isJobExist.data && isJobExist.data.length > 0) {
+        return res.status(400).json({ error: "Job ID already exists!" });
       }
       const response = await database
         .from("jobs")
         .insert([{ id, title, description }]);
 
-      res.status(200).json({ message: response.statusText });
+      if (response.error) {
+        return res.status(500).json({ error: "Failed to create job post" });
+      }
+
+      return res.status(200).json({ message: "Job post created successfully" });
     } catch (error) {
       console.error(error);
+      return res.status(500).json({ error: "Server error occurred" });
     }
   },
 ];
