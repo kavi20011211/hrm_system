@@ -19,7 +19,8 @@ const formSchema = z.object({
   id: z
     .string()
     .min(1, "Job ID is required")
-    .max(10, "Job ID must be at most 10 characters"),
+    .max(10, "Job ID must be at most 10 characters")
+    .regex(/^[a-zA-Z0-9]+$/, "Job ID must only contain letters and numbers"),
   title: z
     .string()
     .min(1, "Job title is required")
@@ -57,26 +58,15 @@ const JobPost = () => {
         }),
       });
 
-      if (response.status !== 200) {
-        const error = await response.text();
-        let errorMessage = error;
-
-        try {
-          const errorData = JSON.parse(error);
-          errorMessage = errorData.error || errorMessage;
-        } catch {
-          errorMessage = error || errorMessage;
-        }
-
-        if (response.status === 400) {
-          errorMessage = "Required fields must be filled with values";
-        }
-
-        toast.error(errorMessage);
-        throw new Error(errorMessage);
+      if (response.status == 200) {
+        toast.success("Job created successfully!");
       }
 
-      toast.success("Job created successfully!");
+      if (response.status == 400) {
+        const data = await response.json();
+        const errorMessage = data.error;
+        toast.error(errorMessage);
+      }
     } catch (error: any) {
       const errorMessage =
         error instanceof Error ? error.message : "An unexpected error occurred";

@@ -14,6 +14,7 @@ export const adminSignUp = [
         password,
         confirm_password,
       } = req.body;
+
       if (
         !firstName ||
         !lastName ||
@@ -26,6 +27,14 @@ export const adminSignUp = [
         return res
           .status(400)
           .json({ error: "All required fields must  be filled with values" });
+      }
+
+      const isUserExist = await database
+        .from("admins")
+        .select("*")
+        .eq("email", email);
+      if (isUserExist.data && isUserExist.data.length > 0) {
+        return res.status(400).json({ error: "Email already exists!" });
       }
 
       if (password !== confirm_password) {
