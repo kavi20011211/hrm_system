@@ -33,11 +33,11 @@ test.describe("Job Posting Validation", () => {
     });
 
     // Fill the job post fields
-    await page.locator('input[name="id"]').fill("PM0002");
-    await page.locator('input[name="title"]').fill("Project Manager");
+    await page.locator('input[name="id"]').fill("SE0001");
+    await page.locator('input[name="title"]').fill("Software engineer");
     await page
       .locator('textarea[name="description"]')
-      .fill("This is a project manager position.");
+      .fill("This is a Software engineer position.");
 
     // Submit the form
     await page.locator('button[type="submit"]:has-text("Submit")').click();
@@ -57,10 +57,10 @@ test.describe("Job Posting Validation", () => {
     await page.goto("http://localhost:5173/job-post");
 
     await page.locator('input[name="id"]').fill("SE0000000000000000");
-    await page.locator('input[name="title"]').fill("Project Manager");
+    await page.locator('input[name="title"]').fill("Software engineer");
     await page
       .locator('textarea[name="description"]')
-      .fill("This is a project manager position.");
+      .fill("This is a Software engineer position.");
 
     await page.locator('button[type="submit"]:has-text("Submit")').click();
 
@@ -74,13 +74,13 @@ test.describe("Job Posting Validation", () => {
   }) => {
     await page.goto("http://localhost:5173/job-post");
 
-    await page.locator('input[name="id"]').fill("PM0002");
+    await page.locator('input[name="id"]').fill("SE0002");
     await page
       .locator('input[name="title"]')
-      .fill("Project Manager Intern Position in LSEG Colombo");
+      .fill("Software engineer Intern Position in LSEG Colombo");
     await page
       .locator('textarea[name="description"]')
-      .fill("This is a project manager position.");
+      .fill("This is a Software engineer position.");
 
     await page.locator('button[type="submit"]:has-text("Submit")').click();
 
