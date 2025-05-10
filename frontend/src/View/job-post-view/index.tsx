@@ -15,6 +15,15 @@ import { Button } from "@/components/ui/button";
 import { API_ENDPOINTS } from "@/config/api";
 import { toast } from "react-toastify";
 
+const allowedJobTitles = [
+  "Software engineer",
+  "Project manager",
+  "Business analyst",
+  "Quality assurance",
+  "Tech Ops",
+  "Cyber security",
+];
+
 const formSchema = z.object({
   id: z
     .string()
@@ -24,7 +33,10 @@ const formSchema = z.object({
   title: z
     .string()
     .min(1, "Job title is required")
-    .max(30, "Job title must be at most 30 characters"),
+    .max(30, "Job title must be at most 30 characters")
+    .refine((val) => allowedJobTitles.includes(val), {
+      message: "Invalid job title. Must be one of the allowed types.",
+    }),
   description: z
     .string()
     .min(1, "Job description is required")
