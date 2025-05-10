@@ -1,0 +1,180 @@
+/* General Page Styles */
+.profile-page-container {
+  padding: 2rem;
+  background: #f8f9fe;
+  min-height: 100vh;
+  font-family: 'Open Sans', sans-serif;
+}
+
+/* Header Banner */
+.profile-header-banner {
+  background: linear-gradient(to right, #5e72e4, #825ee4);
+  color: white;
+  padding: 2rem;
+  border-radius: 1rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.profile-header-banner h2 {
+  margin-bottom: 0.5rem;
+  font-size: 2rem;
+}
+
+.profile-header-banner p {
+  font-size: 0.95rem;
+  margin-bottom: 1.5rem;
+}
+
+.edit-profile-btn {
+  background-color: #fff;
+  color: #5e72e4;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+}
+
+/* Main Content Layout */
+.profile-main-card {
+  width: 1200px;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 2rem;
+}
+
+/* Left Profile Section */
+.profile-left-section {
+  background: white;
+  border-radius: 1rem;
+  padding: 2rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  text-align: center;
+}
+
+.profile-picture-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.profile-picture {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  margin-bottom: 1rem;
+}
+
+.button-edit-picture {
+  margin-top: 1rem;
+  background-color: #5e72e4;
+  color: white;
+}
+
+/* Stats Box */
+.stats-box {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 2rem;
+  width: 100%;
+  font-size: 0.9rem;
+  color: #8898aa;
+}
+
+.stats-box div {
+  text-align: center;
+}
+
+.stats-box strong {
+  display: block;
+  color: #32325d;
+  font-size: 1.2rem;
+}
+
+/* Right Form Section */
+.profile-right-section {
+  background: white;
+  border-radius: 1rem;
+  padding: 2rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.input-group {
+  margin-bottom: 1.25rem;
+}
+
+.input-label {
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+  display: block;
+  color: #32325d;
+}
+
+/* Toast Notification */
+.toast {
+  background: #2dce89;
+  color: white;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  margin: 1rem 0;
+  font-size: 0.95rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+/* Button Group */
+.button-group {
+  margin-top: 1.5rem;
+  display: flex;
+  gap: 1rem;
+}
+
+.button-save {
+  background-color: #5e72e4;
+  color: white;
+}
+
+.button-cancel {
+  background-color: #9b111e;
+  color: white;
+}
+
+.button-delete {
+  background-color: #9b111e;
+  color: white;
+  width: 100%;
+}
+
+/* No Profile Fallback */
+.no-profile-message {
+  font-size: 1.2rem;
+  color: #8898aa;
+  text-align: center;
+  margin-top: 4rem;
+}
+
+.admin-info-box {
+  margin-top: 2rem;
+  width: 100%;
+  background: #f7fafc;
+  border-radius: 0.75rem;
+  padding: 1rem;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+  font-size: 0.95rem;
+}
+
+.admin-info-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+  color: #525f7f;
+}
+
+.admin-info-label {
+  font-weight: 600;
+  color: #32325d;
+}
+
+.admin-info-value {
+  font-weight: 500;
+}

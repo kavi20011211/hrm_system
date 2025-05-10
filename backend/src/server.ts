@@ -21,7 +21,7 @@ app.use(
 app.use("/api", userRoutes);
 app.use("/api", sampleRoutes);
 app.use("/api", jobRoutes);
-app.use("/api", adminRoutes);
+app.use("/api",adminRoutes);
 app.use("/api", employeeRoutes); // Apply JWT authentication middleware to all routes
 
 // Add route debugging

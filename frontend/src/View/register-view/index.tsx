@@ -18,11 +18,13 @@ const formSchema = z.object({
   firstName: z
     .string()
     .min(1, "Admin user first name is required")
-    .max(50, "Admin's firsname length should be maximum 50 characters"),
+    .max(50, "Admin's firsname length should be maximum 50 characters")
+    .regex(/^[a-zA-Z0-9]+$/, "Name must only contain letters and numbers"),
   lastName: z
     .string()
     .min(1, "Admin user last name is required")
-    .max(50, "Admin's lastname length should be maximum 50 characters"),
+    .max(50, "Admin's lastname length should be maximum 50 characters")
+    .regex(/^[a-zA-Z0-9]+$/, "Name must only contain letters and numbers"),
   email: z
     .string()
     .email("Invalid email address")
@@ -105,31 +107,22 @@ const RegisterPage = () => {
         }),
       });
 
-      if (response.status !== 200) {
-        const error = await response.text();
-        let errorMessage = error;
-
-        try {
-          const errorData = JSON.parse(error);
-          errorMessage = errorData.error || errorMessage;
-        } catch {
-          errorMessage = error || errorMessage;
-        }
-
-        if (response.status === 400) {
-          errorMessage = "Required fields must be filled with values";
-        }
-
-        // toast.error(errorMessage);
-        throw new Error(errorMessage);
+      if (response.status == 200) {
+        toast.success("Admin created successfully!");
       }
+      let errorMessage = "";
 
-      toast.success("Admin created successfully!");
+      if (response.status === 400) {
+        const data = await response.json();
+        console.log(data.error);
+        errorMessage = data.error;
+        toast.error(errorMessage);
+      }
     } catch (error: any) {
       const errorMessage =
         error instanceof Error ? error.message : "An unexpected error occurred";
       console.log(errorMessage);
-      // toast.error(errorMessage);
+      toast.error(errorMessage);
     }
   };
   return (
