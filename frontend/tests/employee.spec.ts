@@ -101,9 +101,9 @@ test.describe("Employee Form Validation", () => {
   });
 
   test("should show error for duplicate ID", async ({ page }) => {
-    await page.goto("http://localhost:5173/employee-form"); // use correct URL
+    await page.goto("http://localhost:5173/employee-form"); 
 
-    await page.locator('input[name="id"]').fill("EMP001"); // use label-based selector
+    await page.locator('input[name="id"]').fill("EMP001");
     await page.locator('input[name="name"]').fill("Test Duplicate");
     await page.locator('input[name="email"]').fill("duplicate@test.com");
     await page.locator('input[name="category"]').fill("Engineering");
